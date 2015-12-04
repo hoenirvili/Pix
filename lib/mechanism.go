@@ -12,33 +12,6 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/fatih/color"
-)
-
-var (
-	NLPMAP = map[string]string{
-		"Base						": "http://nlptools.info.uaic.ro/",
-		"Tools						": "http://nlptools.info.uaic.ro/tools",
-		"PoS Tagger for Romanian				": "http://nlptools.infoiasi.ro/WebPosRo/",
-		"Graphical Grammar Studio			": "http://sourceforge.net/projects/ggs/",
-		"NP Chunker for Romanian				": "http://nlptools.infoiasi.ro/WebNpChunkerRo/",
-		"Dependency Parser for Romanian			": "http://nlptools.infoiasi.ro/WebFdgRo/",
-		"Discourse Analysis Tool				": "http://datool.infoiasi.ro/",
-		"Public Discourse Analyzer for Romanian ": "http://students.info.uaic.ro/~ana.timofciuc/PDA/index.php",
-		"Quo Vadis Visualization Tool			": "http://nlptools.infoiasi.ro/QuoVadisVisualization/",
-		"Multilingual Named Entity Recognizer		": "http://nlptools.infoiasi.ro/UAIC.NamedEntityRecognizer/",
-		"Multilingual Named Entity Editor		": "http://nlptools.infoiasi.ro/UAIC.NamedEntityEditor/",
-		"Multilingual Anaphora Resolution		": "http://nlptools.infoiasi.ro/UAIC.AnaphoraResolution/",
-		"Multilingual Anaphora Editor			": "http://nlptools.infoiasi.ro/UAIC.AnaphoraEditor/",
-		"Multilingual Clause Splitter			": "http://nlptools.infoiasi.ro/UAIC.ClauseSplitter/",
-		"Multilingual Clause Editor			": "http://nlptools.infoiasi.ro/UAIC.ClauseEditor/",
-		"Multilingual Discourse Parser			": "http://nlptools.infoiasi.ro/UAIC.DiscourseParser/",
-		"XML Statistics					": "http://nlptools.infoiasi.ro/UAIC.XMLStatistics/",
-	}
-	// colors
-	red   = color.New(color.FgRed).SprintFunc()
-	green = color.New(color.FgGreen).SprintFunc()
-	blue  = color.New(color.FgBlue).SprintFunc()
 )
 
 func retGetFileCnt(path string) string {
@@ -79,7 +52,7 @@ func retGetFileCnt(path string) string {
 
 func connectionTest() {
 	// foe every service
-	for key, val := range NLPMAP {
+	for key, val := range NlpMapUrls {
 
 		response, err := http.Get(val)
 
@@ -97,7 +70,6 @@ func connectionTest() {
 		// after everthing is all good just close the body
 		response.Body.Close()
 	}
-
 }
 
 func Mechanism(c *cli.Context) {
@@ -105,8 +77,11 @@ func Mechanism(c *cli.Context) {
 	cnt := c.Bool("pt")
 
 	if path != "file.txt" {
-		foo := retGetFileCnt(path)
-		fmt.Fprintf(os.Stdout, "%s", foo)
+		fileBuffer := retGetFileCnt(path)
+		// TODO parsing and senthing the request
+		fmt.Fprintf(os.Stdout, "%s", fileBuffer)
+		//TODO
+		//xmlResponse := sendSoapRequest(fileBuffer, NlpPostUrls[0])
 	}
 
 	if cnt {

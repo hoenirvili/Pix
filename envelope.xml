@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webPosRo.uaic/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:parseText_XML>
+         <!--Optional:-->
+         <rawTextInput>
+         </rawTextInput>
+      </web:parseText_XML>
+   </soapenv:Body>
+</soapenv:Envelope>

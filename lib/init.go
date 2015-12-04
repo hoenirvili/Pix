@@ -5,7 +5,42 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 package lib
 
-import "github.com/codegangsta/cli"
+import (
+	"github.com/codegangsta/cli"
+	"github.com/fatih/color"
+)
+
+var (
+	//  title ==> url
+	NlpMapUrls = map[string]string{
+		"Base						": "http://nlptools.info.uaic.ro/",
+		"Tools						": "http://nlptools.info.uaic.ro/tools",
+		"PoS Tagger for Romanian				": "http://nlptools.infoiasi.ro/WebPosRo/",
+		"Graphical Grammar Studio			": "http://sourceforge.net/projects/ggs/",
+		"NP Chunker for Romanian				": "http://nlptools.infoiasi.ro/WebNpChunkerRo/",
+		"Dependency Parser for Romanian			": "http://nlptools.infoiasi.ro/WebFdgRo/",
+		"Discourse Analysis Tool				": "http://datool.infoiasi.ro/",
+		"Public Discourse Analyzer for Romanian ": "http://students.info.uaic.ro/~ana.timofciuc/PDA/index.php",
+		"Quo Vadis Visualization Tool			": "http://nlptools.infoiasi.ro/QuoVadisVisualization/",
+		"Multilingual Named Entity Recognizer		": "http://nlptools.infoiasi.ro/UAIC.NamedEntityRecognizer/",
+		"Multilingual Named Entity Editor		": "http://nlptools.infoiasi.ro/UAIC.NamedEntityEditor/",
+		"Multilingual Anaphora Resolution		": "http://nlptools.infoiasi.ro/UAIC.AnaphoraResolution/",
+		"Multilingual Anaphora Editor			": "http://nlptools.infoiasi.ro/UAIC.AnaphoraEditor/",
+		"Multilingual Clause Splitter			": "http://nlptools.infoiasi.ro/UAIC.ClauseSplitter/",
+		"Multilingual Clause Editor			": "http://nlptools.infoiasi.ro/UAIC.ClauseEditor/",
+		"Multilingual Discourse Parser			": "http://nlptools.infoiasi.ro/UAIC.DiscourseParser/",
+		"XML Statistics					": "http://nlptools.infoiasi.ro/UAIC.XMLStatistics/",
+	}
+	// post request to tools
+	NlpPostUrls = [...]string{
+		"http://nlptools.infoiasi.ro/WebPosRo/PosTaggerRoWS?wsdl",
+	}
+
+	// colors
+	red   = color.New(color.FgRed).SprintFunc()
+	green = color.New(color.FgGreen).SprintFunc()
+	blue  = color.New(color.FgBlue).SprintFunc()
+)
 
 // app main obj
 var App *cli.App

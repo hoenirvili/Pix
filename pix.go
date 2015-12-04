@@ -4,7 +4,7 @@
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
 
-package main
+package Pix
 
 import (
 	"os"
@@ -14,7 +14,6 @@ import (
 
 func main() {
 	lib.Init()
-
 	// start app providing the all the args
 	// in order to parse them
 	lib.App.Run(os.Args)
