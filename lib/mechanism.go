@@ -14,7 +14,7 @@ import (
 	"github.com/codegangsta/cli"
 )
 
-func retGetFileCnt(path string) string {
+func retGetFileCnt(path string) []byte {
 	var count = 8192
 
 	file, err := os.OpenFile(path, os.O_RDONLY, 0666)
@@ -39,15 +39,11 @@ func retGetFileCnt(path string) string {
 		fmt.Fprintf(os.Stderr, "%s\n", "Error on reading the file")
 	}
 
-	fmt.Println(n)
 	if n > 10000000 {
 		fmt.Fprintf(os.Stderr, "%s\n", "Not allowed more than 10000000 chars")
 	}
 
-	//transform byte into string
-	stringCnt := string(cnt)
-
-	return stringCnt
+	return cnt
 }
 
 func connectionTest() {
@@ -78,10 +74,11 @@ func Mechanism(c *cli.Context) {
 
 	if path != "file.txt" {
 		fileBuffer := retGetFileCnt(path)
-		// TODO parsing and senthing the request
-		fmt.Fprintf(os.Stdout, "%s", fileBuffer)
-		//TODO
-		//xmlResponse := sendSoapRequest(fileBuffer, NlpPostUrls[0])
+		xmlResponse := sendSoapRequest(fileBuffer, NlpPostUrls[0])
+
+		if len(xmlResponse) > 0 {
+			os.Exit(1)
+		}
 	}
 
 	if cnt {
