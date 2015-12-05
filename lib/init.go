@@ -62,6 +62,11 @@ func initFlags(a *cli.App) {
 			Value: "file.xml",
 			Usage: "Set envelope path you wish to send",
 		},
+		cli.StringFlag{
+			Name:  "save,s",
+			Value: "save.xml",
+			Usage: "Save the envelope",
+		},
 	}
 }
 

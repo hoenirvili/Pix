@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 type Envelope struct {
@@ -69,7 +70,7 @@ func sanitizeXml(buff []byte) []byte {
 
 }
 
-func sendEnvelopeRequest(env *Envelope, url string) {
+func sendEnvelopeRequest(env *Envelope, url string) ([]byte, []rune) {
 	fmt.Printf("Sending request to %s this urs !\n", url)
 
 	xmlEnvelope, err := getEnvelope(*env)
@@ -87,17 +88,22 @@ func sendEnvelopeRequest(env *Envelope, url string) {
 
 	if err != nil {
 		fmt.Println(err)
-		return
+		os.Exit(1)
 	}
 
 	defer resp.Body.Close()
 
-	b, err := ioutil.ReadAll(resp.Body)
-
-	if err != nil {
-		fmt.Println(err)
-		return
+	if resp.StatusCode != http.StatusOK {
+		fmt.Println("Server not responding\n")
+		os.Exit(1)
 	}
 
-	fmt.Println(string(b))
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	newRune := bytes.Runes(b)
+	return b, newRune
+
 }

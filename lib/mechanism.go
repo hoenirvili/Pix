@@ -25,6 +25,20 @@ func retGetFileCnt(path string) []byte {
 
 	return cnt
 }
+func saveToFile(path string, cnt string) {
+	fd, err := os.Create(path)
+
+	if err != nil {
+		fmt.Printf("Can't create file here\n")
+		os.Exit(1)
+	}
+
+	n, err := fd.WriteString(cnt)
+	if err != nil && n <= 0 {
+		fmt.Fprint(os.Stderr, "Can't write to file\n")
+		os.Exit(1)
+	}
+}
 
 func connectionTest() {
 	// foe every service
@@ -52,6 +66,7 @@ func Mechanism(c *cli.Context) {
 	path := c.String("path")
 	cnt := c.Bool("pt")
 	env := c.String("envelope")
+	pathToSave := c.String("save")
 
 	if path != "file.txt" && env != "file.xml" {
 
@@ -66,9 +81,12 @@ func Mechanism(c *cli.Context) {
 
 		newEnvelope.addCntToEnv(fileBuffer)
 		// send Request
-		sendEnvelopeRequest(newEnvelope, NlpPostUrls[0])
+		byteSlie, _ := sendEnvelopeRequest(newEnvelope, NlpPostUrls[0])
+
+		saveToFile(pathToSave, string(byteSlie))
 
 	} else {
+
 		if path != "file.txt" && env == "file.xml" || path == "file.txt" && env != "file.xml" {
 			fmt.Println("Please enter your envelope\n")
 		}
