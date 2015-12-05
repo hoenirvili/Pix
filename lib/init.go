@@ -57,6 +57,11 @@ func initFlags(a *cli.App) {
 			Name:  "pt, t",
 			Usage: "Test if NLPTOOLS services are online",
 		},
+		cli.StringFlag{
+			Name:  "envelope, env",
+			Value: "file.xml",
+			Usage: "Set envelope path you wish to send",
+		},
 	}
 }
 

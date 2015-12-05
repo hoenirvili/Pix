@@ -1,4 +1,3 @@
 build:
 	go build
-go:
-	./Pix -t
+	./Pix --path mecha.txt --env envelope.xml

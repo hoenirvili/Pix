@@ -8,6 +8,7 @@ package lib
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -15,32 +16,11 @@ import (
 )
 
 func retGetFileCnt(path string) []byte {
-	var count = 8192
-
-	file, err := os.OpenFile(path, os.O_RDONLY, 0666)
+	cnt, err := ioutil.ReadFile(path)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s %s\n", "Can't open file on", path)
-	}
-
-	// local var that stores the content
-	cnt := make([]byte, count)
-
-	defer func() {
-		if err := file.Close(); err != nil {
-			fmt.Fprintf(os.Stderr, "%s\n", "Error on closing the file")
-			panic(err)
-		}
-	}()
-
-	n, err := file.Read(cnt)
-
-	if err != nil && n == 0 {
-		fmt.Fprintf(os.Stderr, "%s\n", "Error on reading the file")
-	}
-
-	if n > 10000000 {
-		fmt.Fprintf(os.Stderr, "%s\n", "Not allowed more than 10000000 chars")
+		fmt.Fprintf(os.Stderr, "Can't read from file %s\n", path)
+		panic(err)
 	}
 
 	return cnt
@@ -71,13 +51,26 @@ func connectionTest() {
 func Mechanism(c *cli.Context) {
 	path := c.String("path")
 	cnt := c.Bool("pt")
+	env := c.String("envelope")
 
-	if path != "file.txt" {
+	if path != "file.txt" && env != "file.xml" {
+
 		fileBuffer := retGetFileCnt(path)
-		xmlResponse := sendSoapRequest(fileBuffer, NlpPostUrls[0])
 
-		if len(xmlResponse) > 0 {
+		newEnvelope, err := setEnvelope(env)
+
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Can't set the Envelope\n")
 			os.Exit(1)
+		}
+
+		newEnvelope.addCntToEnv(fileBuffer)
+
+		fmt.Printf("%v\n", newEnvelope)
+
+	} else {
+		if path != "file.txt" && env == "file.xml" || path == "file.txt" && env != "file.xml" {
+			fmt.Println("Please enter your envelope\n")
 		}
 	}
 
