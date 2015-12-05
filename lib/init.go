@@ -31,26 +31,35 @@ var (
 		"Multilingual Discourse Parser			": "http://nlptools.infoiasi.ro/UAIC.DiscourseParser/",
 		"XML Statistics					": "http://nlptools.infoiasi.ro/UAIC.XMLStatistics/",
 	}
-	// post request to tools
+
+	// The tools that the app will support
+	// and interact for this moment
 	NlpPostUrls = [...]string{
 		"http://nlptools.infoiasi.ro/WebPosRo/PosTaggerRoWS?wsdl",
+		"http://nlptools.infoiasi.ro/WebNpChunkerRo/NpChunkerRoWS?wsdl",
+		"http://nlptools.infoiasi.ro/WebFdgRo/FdgParserRoWS?wsdl",
+		"http://nlptools.infoiasi.ro/UAIC.NamedEntityRecognizer/NamedEntityRecognizerWS?wsdl",
+		"http://nlptools.infoiasi.ro/UAIC.AnaphoraResolution/AnaphoraResolutionWS?wsdl",
+		"http://nlptools.infoiasi.ro/UAIC.ClauseSplitter/ClauseSplitterWS?wsdl",
+		"http://nlptools.infoiasi.ro/UAIC.DiscourseParser/DiscourseParserWS?wsdl",
 	}
 
-	// colors
-	red   = color.New(color.FgRed).SprintFunc()
-	green = color.New(color.FgGreen).SprintFunc()
-	blue  = color.New(color.FgBlue).SprintFunc()
-)
+	// Main colors
+	red    = color.New(color.FgHiRed).SprintFunc()
+	green  = color.New(color.FgHiGreen).SprintFunc()
+	blue   = color.New(color.FgHiBlue).SprintFunc()
+	yellow = color.New(color.FgHiYellow).SprintFunc()
 
-// app main obj
-var App *cli.App
+	// Main application declare it globally
+	App *cli.App
+)
 
 //init the flags
 func initFlags(a *cli.App) {
 	a.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "path, p",
-			Value: "file.txt",
+			Name: "path, p",
+			//Value: "file.txt",
 			Usage: "Set file path you wish to send",
 		},
 		cli.BoolFlag{
@@ -58,14 +67,42 @@ func initFlags(a *cli.App) {
 			Usage: "Test if NLPTOOLS services are online",
 		},
 		cli.StringFlag{
-			Name:  "envelope, env",
-			Value: "file.xml",
+			Name: "env, e",
+			//Value: "file.xml",
 			Usage: "Set envelope path you wish to send",
 		},
 		cli.StringFlag{
-			Name:  "save,s",
-			Value: "save.xml",
+			Name: "save, s",
+			//Value: "save.xml",
 			Usage: "Save the envelope",
+		},
+		cli.BoolFlag{
+			Name:  "0",
+			Usage: "Interact with PosTaggerRoWS",
+		},
+		cli.BoolFlag{
+			Name:  "1",
+			Usage: "Interact with NpChunkerRoWS",
+		},
+		cli.BoolFlag{
+			Name:  "2",
+			Usage: "Interact with FdgParserRoWS",
+		},
+		cli.BoolFlag{
+			Name:  "3",
+			Usage: "Interact with NamedEntityRecognizerWS",
+		},
+		cli.BoolFlag{
+			Name:  "4",
+			Usage: "Interact with AnaphoraResolutionWS",
+		},
+		cli.BoolFlag{
+			Name:  "5",
+			Usage: "Interact with ClauseSplitterWS",
+		},
+		cli.BoolFlag{
+			Name:  "6",
+			Usage: "Interact with DiscourseParserWS",
 		},
 	}
 }
@@ -79,11 +116,13 @@ func Init() {
 
 	App.Name = "Pix (Parser Interface XML)"
 	App.Author = "Hoenir"
-	App.Usage = `The application facilits a simple command line interface for service communication NLPTOOLS`
+	App.Usage = `The application facilits a simple command line interface for service communication on NLPTOOLS`
 	App.Version = "0.0.1"
 	App.Copyright = "All rights reserved"
 	App.Email = "hoenirvili@gmail.com"
 
-	// Actions
+	// Mechanism is the primary function that
+	// interprets flags , fire up functions and clean
+	// up all sorts of types
 	App.Action = Mechanism
 }

@@ -8,82 +8,71 @@ package lib
 
 import (
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"os"
 
 	"github.com/codegangsta/cli"
 )
 
-func retGetFileCnt(path string) []byte {
-	cnt, err := ioutil.ReadFile(path)
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Can't read from file %s\n", path)
-		panic(err)
-	}
-
-	return cnt
-}
-func saveToFile(path string, cnt string) {
-	fd, err := os.Create(path)
-
-	if err != nil {
-		fmt.Printf("Can't create file here\n")
-		os.Exit(1)
-	}
-
-	n, err := fd.WriteString(cnt)
-	if err != nil && n <= 0 {
-		fmt.Fprint(os.Stderr, "Can't write to file\n")
-		os.Exit(1)
-	}
-}
-
-func connectionTest() {
-	// foe every service
-	for key, val := range NlpMapUrls {
-
-		response, err := http.Get(val)
-
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s\n", red("Http Get Request failed"))
-			fmt.Fprintf(os.Stderr, "%s : %s :\t=====>\t %s\n", blue(key), red("HTTP FAIL"), val)
-		}
-
-		if response.StatusCode == http.StatusOK {
-			fmt.Fprintf(os.Stdout, "%s : %s :\t=====>\t %s\n", blue(key), green("SERVICE +"), val)
-		} else {
-			fmt.Fprintf(os.Stdout, "%s \t : %s :\t=====>\t %s\n", blue(key), red("SERVICE -"), val)
-		}
-
-		// after everthing is all good just close the body
-		response.Body.Close()
-	}
-}
+/**posTagger := c.Bool("0")
+	npChunker := c.Bool("1")
+	fdgParser := c.Bool("2")
+	nameEntity := c.Bool("3")
+	anaphoraRes := c.Bool("4")
+	clauseSplitter := c.Bool("5")
+	discParser := c.Bool("6")
+**/
 
 func Mechanism(c *cli.Context) {
+	// cache all values
 	path := c.String("path")
-	cnt := c.Bool("pt")
-	env := c.String("envelope")
-	pathToSave := c.String("save")
+	connection := c.Bool("pt")
+	env := c.String("env")
+	savePath := c.String("save")
 
+	var services = map[uint8]bool{
+		0: c.Bool("0"),
+		1: c.Bool("1"),
+		2: c.Bool("2"),
+		3: c.Bool("3"),
+		4: c.Bool("4"),
+		5: c.Bool("5"),
+		6: c.Bool("6"),
+	}
+
+	argsUnparsed := c.Args()
+	if len(argsUnparsed) == 0 {
+		fmt.Println(path)
+		fmt.Println(connection)
+		fmt.Println(env)
+		fmt.Println(savePath)
+		fmt.Println(posTagger)
+		fmt.Println(npChunker)
+		fmt.Println(fdgParser)
+		fmt.Println(nameEntity)
+		fmt.Println(anaphoraRes)
+		fmt.Println(clauseSplitter)
+		fmt.Println(discParser)
+
+	} else {
+		fmt.Fprintf(os.Stderr, "%s ,%s\n", "Command/commands not implemented", red(argsUnparsed))
+	}
+	/**
 	if path != "file.txt" && env != "file.xml" {
 
-		fileBuffer := retGetFileCnt(path)
+		fileBuffer := fileContent(path)
+		isEmpty(fileBuffer)
 
-		newEnvelope, err := setEnvelope(env)
+		envelope, err := newEnvelope(env)
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Can't set the Envelope\n")
-			os.Exit(1)
+			ErrNow("Can't set the envelope")
 		}
 
-		newEnvelope.addCntToEnv(fileBuffer)
+		envelope.addContent(fileBuffer)
 		// send Request
-		byteSlie, _ := sendEnvelopeRequest(newEnvelope, NlpPostUrls[0])
+		buffer := sendEnvelopeRequest(envelope, NlpPostUrls[0])
 
-		saveToFile(pathToSave, string(byteSlie))
+		saveFile(savePath, string(buffer))
 
 	} else {
 
@@ -92,7 +81,7 @@ func Mechanism(c *cli.Context) {
 		}
 	}
 
-	if cnt {
+	if connection {
 		connectionTest()
 	}
 
@@ -100,8 +89,8 @@ func Mechanism(c *cli.Context) {
 	if len(os.Args[1:]) == 0 {
 		cli.ShowAppHelp(c)
 	} else {
-		if len(c.Args()) > 0 {
-			fmt.Fprintf(os.Stderr, "%s\n", "Command not implemented")
 		}
 	}
+	*/
+
 }

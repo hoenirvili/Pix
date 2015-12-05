@@ -8,13 +8,13 @@ package main
 
 import (
 	"os"
-
+	// import our hand-mande library
 	"github.com/hoenirvili/Pix/lib"
 )
 
 func main() {
+	// init our command line and consts
 	lib.Init()
-	// start app providing the all the args
-	// in order to parse them
+	// start app providing the all the args  in order to parse them
 	lib.App.Run(os.Args)
 }
