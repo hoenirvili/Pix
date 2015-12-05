@@ -4,22 +4,22 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 )
 
 type Envelope struct {
-	XMLName    xml.Name `xml:soapenv:Envelope"`
-	Key1       string   `xml:"xmlns:soapenv,attr"`
-	Value1     string   `xml:",chardata"`
-	Key2       string   `xml:"xmlns:web,attr"`
-	Value2     string   `xml:",chardata"`
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
 	CreateBody Body     `xml:"soapenv:Body"`
 }
 type Body struct {
-	CreateText Text `xml:"soapenv:parseText_XML"`
+	CreateText Text `xml:"web:parseText_XML"`
 }
 
 type Text struct {
-	TextRow []byte `xml:"web:rawTextInput"`
+	TextRow []byte `xml:"rawTextInput"`
 }
 
 func setEnvelope(path string) (*Envelope, error) {
@@ -39,8 +39,8 @@ func setEnvelope(path string) (*Envelope, error) {
 
 func (e *Envelope) addCntToEnv(cnt []byte) {
 	e.CreateBody.CreateText.TextRow = cnt
-	e.Key1 = "http://schemas.xmlsoap.org/soap/envelope/"
-	e.Key2 = "http://webPosRo.uaic/"
+	e.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+	e.Val2 = "http://webPosRo.uaic/"
 }
 
 // get xmlEnvelope
@@ -61,11 +61,11 @@ func sanitizeXml(buff []byte) []byte {
 	var open = []byte("<soapenv:Envelope ")
 	var close = []byte("</soapenv:Envelope>")
 
-	replace := bytes.Replace(buff, wrong, open, -1)
+	buff = bytes.Replace(buff, wrong, open, -1)
 
-	newReplace := bytes.Replace(replace, eofWrong, close, -1)
+	buff = bytes.Replace(buff, eofWrong, close, -1)
 
-	return newReplace
+	return buff
 
 }
 
@@ -80,5 +80,24 @@ func sendEnvelopeRequest(env *Envelope, url string) {
 	}
 
 	xmlEnvelope = sanitizeXml(xmlEnvelope)
+
 	fmt.Println(string(xmlEnvelope))
+
+	resp, err := http.Post(url, "text/xml;charset=UTF-8", bytes.NewReader(xmlEnvelope))
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer resp.Body.Close()
+
+	b, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(string(b))
 }
