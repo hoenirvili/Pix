@@ -65,8 +65,8 @@ func Mechanism(c *cli.Context) {
 		}
 
 		newEnvelope.addCntToEnv(fileBuffer)
-
-		fmt.Printf("%v\n", newEnvelope)
+		// send Request
+		sendEnvelopeRequest(newEnvelope, NlpPostUrls[0])
 
 	} else {
 		if path != "file.txt" && env == "file.xml" || path == "file.txt" && env != "file.xml" {
