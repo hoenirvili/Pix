@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 )
 
 func sendEnvelopeRequest(env interface{}, url string) []byte {
@@ -21,16 +22,20 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(xml))
 	req.Header.Set("Content-Type", "text/xml;charset=UTF-8")
 
-	// Create new client that will do the request
-	client := &http.Client{}
+	timeout := time.Duration(10 * time.Second)
+	// Create new client that will do the request and after 10 seconds of waiting just timeout
+	client := &http.Client{
+		Timeout: timeout,
+	}
 
-	fmt.Fprintf(os.Stdout, "%s ===> %s\n", blue("Sending request"), green(url))
+	fmt.Fprintf(os.Stdout, "%s ===> %s\n", blue("REQUEST"), green(url))
 
 	// Do the request
 	response, err := client.Do(req)
 
 	if err != nil {
-		ErrNow("Client can't do the specific request")
+		fmt.Fprintf(os.Stderr, "%s ===> %s\n", yellow("TIMEOUT"), green(url))
+		os.Exit(0)
 	}
 
 	defer response.Body.Close()
@@ -39,6 +44,7 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	fmt.Println(green("Reponse Headers"), blue(response.Header))
 
 	body, err := ioutil.ReadAll(response.Body)
+
 	if err != nil {
 		ErrNow("Can't read body response ")
 	}
