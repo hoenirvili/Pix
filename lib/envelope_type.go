@@ -38,3 +38,96 @@ type Text1 struct {
 }
 
 //////////////////////////////////////////////////
+
+// FDG PARSER ENVELOPE SERVICE
+type Envelope2 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
+	CreateBody Body2    `xml:"soapenv:Body"`
+}
+
+type Body2 struct {
+	CreateText Text2 `xml:"web:parseText"`
+}
+
+type Text2 struct {
+	TypeRow []byte `xml:"txt"`
+}
+
+//////////////////////////////////////////////////
+
+// NAME ENTITY RECOGNIZER SERVICE
+type Envelope3 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
+	CreateBody Body3    `xml:"soapenv:Body"`
+}
+
+type Body3 struct {
+	CreateText Text3 `xml:"rec:recognizeEntities"`
+}
+
+type Text3 struct {
+	TypeRow []byte `xml:"text"`
+	Lang    []byte `xml:"language"`
+}
+
+//////////////////////////////////////////////////
+
+//ANAPHORA RESOLUTION SERVICE
+
+type Envelope4 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
+	CreateBody Body4    `xml:"soapenv:Body"`
+}
+
+type Body4 struct {
+	CreateText Text4 `xml:"res:solveLinks"`
+}
+
+type Text4 struct {
+	TypeRow []byte `xml:"text"`
+	Lang    []byte `xml:"language"`
+}
+
+///////////////////////////////////////////////////
+
+// CLAUSE SPLITTER SERVICE
+type Envelope5 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
+	CreateBody Body5    `xml:"soapenv:Body"`
+}
+
+type Body5 struct {
+	CreateText Text5 `xml:"spl:split"`
+}
+
+type Text5 struct {
+	TypeRow []byte `xml:"text"`
+	Lang    []byte `xml:"language"`
+}
+
+///////////////////////////////////////////////////////
+
+//DISCOURSE PARSE SERVICE
+type Envelope6 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:web,attr"`
+	CreateBody Body6    `xml:"soapenv:Body"`
+}
+
+type Body6 struct {
+	CreateText Text6 `xml:"par:parse"`
+}
+
+type Text6 struct {
+	TypeRow []byte `xml:"text"`
+	Lang    []byte `xml:"language"`
+}

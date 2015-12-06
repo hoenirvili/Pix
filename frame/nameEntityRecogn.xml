@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rec="http://recognizer.entity.named.uaic/">
+	<soapenv:Body>
+		<rec:recognizeEntities>
+				<text></text>
+				<language></language>
+		</rec:recognizeEntities>
+	</soapenv:Body>
+</soapenv:Envelope>

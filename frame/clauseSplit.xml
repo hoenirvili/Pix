@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spl="http://splitter.clause.uaic/">
+	<soapenv:Body>
+		<spl:split>
+			<text></text>
+			<language></language>
+		</spl:split>
+	</soapenv:Body>
+</soapenv:Envelope>

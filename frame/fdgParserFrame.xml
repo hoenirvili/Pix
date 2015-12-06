@@ -1,0 +1,7 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webFdgRo.uaic/">
+	<soapenv:Body>
+		<web:parseText>
+			<txt></txt>
+		</web:parseText>
+	</soapenv:Body>
+</soapenv:Envelope>

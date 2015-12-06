@@ -9,8 +9,6 @@ import (
 )
 
 func sendEnvelopeRequest(env interface{}, url string) []byte {
-	fmt.Fprintf(os.Stdout, "%s ===> %s\n", blue("Sending request"), green(url))
-
 	xml, err := getEnvelope(env)
 
 	if err != nil && len(xml) == 0 {
@@ -25,8 +23,12 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 
 	// Create new client that will do the request
 	client := &http.Client{}
+
+	fmt.Fprintf(os.Stdout, "%s ===> %s\n", blue("Sending request"), green(url))
+
 	// Do the request
 	response, err := client.Do(req)
+
 	if err != nil {
 		ErrNow("Client can't do the specific request")
 	}

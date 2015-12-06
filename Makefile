@@ -1,5 +1,5 @@
 build:
 	go build
-	./Pix --path mecha.txt --env frame/postTaggerFrame.xml  --save  req1.xml -0
+	./Pix --path text/mecha.txt --env frame/discourseParser.xml --save req6.xml -6
 clean:
 	rm -rf newRequest.xml

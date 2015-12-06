@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:par="http://parser.discourse.uaic/">
+	<soapenv:Body>
+		<par:parse>
+			<text></text>
+			<language></language>
+		</par:parse>
+	</soapenv:Body>
+</soapenv:Envelope>

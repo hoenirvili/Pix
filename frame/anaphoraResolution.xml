@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:res="http://resolution.anaphora.uaic/">
+	<soapenv:Body>
+		<res:solveLinks>
+			<text></text>
+			<language></language>
+		</res:solveLinks>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -4,7 +4,6 @@ import "encoding/xml"
 
 func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 	switch key {
-
 	case 0:
 		var env Envelope
 		buffSliceEnv := fileContent(path)
@@ -22,20 +21,53 @@ func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 		env.Val2 = "http://webNpChunkerRo.uaic/"
 		return env, err
 	case 2:
-		//TODO
-		break
+		var env Envelope2
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://webFdgRo.uaic/"
+		return env, err
 	case 3:
-		//TODO
-		break
+		var env Envelope3
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		//DEFAULT RO
+		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://recognizer.entity.named.uaic/"
+		return env, err
 	case 4:
-		//TODO
-		break
+		var env Envelope4
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		//DEFAULT RO
+		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://resolution.anaphora.uaic/"
+		return env, err
 	case 5:
-		//TODO
-		break
+		var env Envelope5
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		//DEFAULT RO
+		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://splitter.clause.uaic/"
+		return env, err
 	case 6:
-		//TODO
-		break
+		var env Envelope5
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		//DEFAULT RO
+		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://parser.discourse.uaic/"
+		return env, err
 	}
 
 	return nil, nil
