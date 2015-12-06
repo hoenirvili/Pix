@@ -37,59 +37,41 @@ func Mechanism(c *cli.Context) {
 		5: c.Bool("5"),
 		6: c.Bool("6"),
 	}
-
 	argsUnparsed := c.Args()
-	if len(argsUnparsed) == 0 {
-		/**	fmt.Println(path)
-				fmt.Println(connection)
-				fmt.Println(env)
-				fmt.Println(savePath)
-		**/
+	if len(os.Args[1:]) != 0 {
+		if len(argsUnparsed) == 0 {
 
-		n := nReq(services)
-		if n != 1 {
-			fmt.Fprintf(os.Stderr, "%s\n", white("Just one request at a time"))
-			os.Exit(0)
-		} else {
-			if n == 0 {
-				fmt.Fprintf(os.Stder, "%s\n", white("Please enter a source to reqeust"))
+			if connection {
+				connectionTest()
 				os.Exit(0)
 			}
-		}
 
-		if len(path) > 0 && len(env) > 0 && len(savePath) > 0 {
-			fileBuffer := fileContent(path)
-			isEmpty(fileBuffer)
+			// all req commands parsed
+			if len(path) > 0 && len(env) > 0 && len(savePath) > 0 {
+				n := nReq(services)
 
-			envelope, err := newEnvelope(env)
-
-			if err != nil {
-				ErrNow("Can't set the envelope")
-			}
-			envelope.addContent(fileBuffer)
-			// order dosen't count
-
-			for key, val := range services {
-				if val == true {
-					// send Request
-					buffer := sendEnvelopeRequest(envelope, NlpPostUrls[key])
-					//after req save file
-					saveFile(savePath, string(buffer))
-					break
+				if n != 1 {
+					fmt.Fprintf(os.Stderr, "%s\n", white("Just one request at a time"))
+					os.Exit(0)
+				} else {
+					if n == 0 {
+						fmt.Fprintf(os.Stderr, "%s\n", white("Please enter a source to reqeust"))
+						os.Exit(0)
+					}
 				}
+				core(path, env, savePath, services)
+			} else {
+				fmt.Fprintf(os.Stderr, "%s\n", white("In order to make the request valid, please set the corresponding path,envelope and where to save"))
+				os.Exit(0)
 			}
-		} else {
-			fmt.Fprintf(os.Stderr, "%s\n", white("In order to make the request valid, please set the corresponding path,envelope and where to save"))
-			os.Exit(0)
-		}
 
-		if connection {
-			connectionTest()
+			// other commands
+		} else {
+			fmt.Fprintf(os.Stderr, "%s ,%s\n", "Command/commands not implemented", red(argsUnparsed))
 		}
 	} else {
-		fmt.Fprintf(os.Stderr, "%s ,%s\n", "Command/commands not implemented", red(argsUnparsed))
+		cli.ShowAppHelp(c)
 	}
-
 }
 func nReq(container map[int]bool) int {
 	var n int
@@ -99,4 +81,29 @@ func nReq(container map[int]bool) int {
 		}
 	}
 	return n
+}
+
+func core(path, envPath, savePath string, services map[int]bool) {
+	// get all content from filepath that you with to send
+	// with the envelope
+	fileBuffer := fileContent(path)
+
+	// order dosen't count
+	for key, val := range services {
+		if val == true {
+			//create new envelope and fill it with the content from above
+			envelope, err := newEnvelope(key, envPath, fileBuffer)
+			// check for eny errors
+
+			if err != nil && envelope != nil {
+				ErrNow("Can't set the envelope")
+			}
+			// send Request
+			buffer := sendEnvelopeRequest(envelope, NlpPostUrls[key])
+			//after req save file
+			saveFile(savePath, string(buffer))
+			break
+		}
+	}
+
 }

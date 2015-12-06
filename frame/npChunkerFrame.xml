@@ -1,0 +1,7 @@
+<soapenv:Envelope  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webPosRo.uaic/">
+	   <soapenv:Body>
+		    <web:chunkTest>
+				<inputText></inputText>
+			</web:chunkTest>
+		</soapenv:Body>
+</soapenv:Envelope>

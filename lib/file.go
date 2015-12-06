@@ -7,6 +7,7 @@
 package lib
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -15,9 +16,8 @@ import (
 // a path var and return the content uint8 type
 func fileContent(path string) []byte {
 	buffer, err := ioutil.ReadFile(path)
-
 	if err != nil {
-		ErrNow("Can't read from file")
+		ErrNow(fmt.Sprintf("%s %s", "Can't read from ", path))
 	}
 
 	return buffer

@@ -6,10 +6,10 @@ func replaceAllEntities(buff []byte) []byte {
 
 	var entities = map[string]string{
 		" ":  "&nbsp;",
+		"\"": "&quot;",
 		"&":  "&amp;",
 		"<":  "&lt;",
 		">":  "&gt;",
-		"\"": "&quot;",
 	}
 
 	for key, val := range entities {

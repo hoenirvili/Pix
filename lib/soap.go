@@ -8,16 +8,17 @@ import (
 	"os"
 )
 
-func sendEnvelopeRequest(env *Envelope, url string) []byte {
+func sendEnvelopeRequest(env interface{}, url string) []byte {
 	fmt.Fprintf(os.Stdout, "%s ===> %s\n", blue("Sending request"), green(url))
 
-	xml, err := getEnvelope(*env)
+	xml, err := getEnvelope(env)
 
 	if err != nil && len(xml) == 0 {
 		ErrNow("Can't get the envlope content in your byte buffer")
 	}
 
 	xml = sanitizeEnvelope(xml)
+
 	// make the request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(xml))
 	req.Header.Set("Content-Type", "text/xml;charset=UTF-8")

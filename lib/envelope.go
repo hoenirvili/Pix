@@ -2,40 +2,47 @@ package lib
 
 import "encoding/xml"
 
-type Envelope struct {
-	XMLName    xml.Name `xml:"Envelope"`
-	Val1       string   `xml:"xmlns:soapenv,attr"`
-	Val2       string   `xml:"xmlns:web,attr"`
-	CreateBody Body     `xml:"soapenv:Body"`
-}
+func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
+	switch key {
 
-type Body struct {
-	CreateText Text `xml:"web:parseText_XML"`
-}
+	case 0:
+		var env Envelope
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TextRow = buffer
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://webPosRo.uaic/"
+		return env, err
+	case 1:
+		var env Envelope1
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.TypeRow = buffer
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://webNpChunkerRo.uaic/"
+		return env, err
+	case 2:
+		//TODO
+		break
+	case 3:
+		//TODO
+		break
+	case 4:
+		//TODO
+		break
+	case 5:
+		//TODO
+		break
+	case 6:
+		//TODO
+		break
+	}
 
-type Text struct {
-	TextRow []byte `xml:"rawTextInput"`
-}
-
-func newEnvelope(path string) (*Envelope, error) {
-	// create new envelope
-	var env Envelope
-
-	buffSliceEnv := fileContent(path)
-
-	err := xml.Unmarshal(buffSliceEnv, &env)
-
-	return &env, err
-}
-
-func (e *Envelope) addContent(buffer []byte) {
-	e.CreateBody.CreateText.TextRow = buffer
-	e.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
-	e.Val2 = "http://webPosRo.uaic/"
+	return nil, nil
 }
 
 // get xmlEnvelope
-func getEnvelope(env Envelope) ([]byte, error) {
+func getEnvelope(env interface{}) ([]byte, error) {
 	buff, err := xml.MarshalIndent(env, "", "   ")
 
 	if err != nil {

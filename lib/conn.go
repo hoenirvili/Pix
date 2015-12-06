@@ -9,7 +9,6 @@ import (
 func connectionTest() {
 	// foe every service
 	for key, val := range NlpMapUrls {
-
 		response, err := http.Get(val)
 
 		if err != nil {
@@ -24,5 +23,7 @@ func connectionTest() {
 		}
 		// After everthing is all good just close the body
 		response.Body.Close()
+
 	}
+
 }
