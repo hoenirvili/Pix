@@ -49,7 +49,7 @@ var (
 	green  = color.New(color.FgHiGreen).SprintFunc()
 	blue   = color.New(color.FgHiBlue).SprintFunc()
 	yellow = color.New(color.FgHiYellow).SprintFunc()
-
+	white  = color.New(color.FgHiWhite).SprintFunc()
 	// Main application declare it globally
 	App *cli.App
 )

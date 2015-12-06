@@ -28,8 +28,7 @@ func Mechanism(c *cli.Context) {
 	connection := c.Bool("pt")
 	env := c.String("env")
 	savePath := c.String("save")
-
-	var services = map[uint8]bool{
+	services := map[int]bool{
 		0: c.Bool("0"),
 		1: c.Bool("1"),
 		2: c.Bool("2"),
@@ -41,56 +40,63 @@ func Mechanism(c *cli.Context) {
 
 	argsUnparsed := c.Args()
 	if len(argsUnparsed) == 0 {
-		fmt.Println(path)
-		fmt.Println(connection)
-		fmt.Println(env)
-		fmt.Println(savePath)
-		fmt.Println(posTagger)
-		fmt.Println(npChunker)
-		fmt.Println(fdgParser)
-		fmt.Println(nameEntity)
-		fmt.Println(anaphoraRes)
-		fmt.Println(clauseSplitter)
-		fmt.Println(discParser)
+		/**	fmt.Println(path)
+				fmt.Println(connection)
+				fmt.Println(env)
+				fmt.Println(savePath)
+		**/
 
+		n := nReq(services)
+		if n != 1 {
+			fmt.Fprintf(os.Stderr, "%s\n", white("Just one request at a time"))
+			os.Exit(0)
+		} else {
+			if n == 0 {
+				fmt.Fprintf(os.Stder, "%s\n", white("Please enter a source to reqeust"))
+				os.Exit(0)
+			}
+		}
+
+		if len(path) > 0 && len(env) > 0 && len(savePath) > 0 {
+			fileBuffer := fileContent(path)
+			isEmpty(fileBuffer)
+
+			envelope, err := newEnvelope(env)
+
+			if err != nil {
+				ErrNow("Can't set the envelope")
+			}
+			envelope.addContent(fileBuffer)
+			// order dosen't count
+
+			for key, val := range services {
+				if val == true {
+					// send Request
+					buffer := sendEnvelopeRequest(envelope, NlpPostUrls[key])
+					//after req save file
+					saveFile(savePath, string(buffer))
+					break
+				}
+			}
+		} else {
+			fmt.Fprintf(os.Stderr, "%s\n", white("In order to make the request valid, please set the corresponding path,envelope and where to save"))
+			os.Exit(0)
+		}
+
+		if connection {
+			connectionTest()
+		}
 	} else {
 		fmt.Fprintf(os.Stderr, "%s ,%s\n", "Command/commands not implemented", red(argsUnparsed))
 	}
-	/**
-	if path != "file.txt" && env != "file.xml" {
 
-		fileBuffer := fileContent(path)
-		isEmpty(fileBuffer)
-
-		envelope, err := newEnvelope(env)
-
-		if err != nil {
-			ErrNow("Can't set the envelope")
-		}
-
-		envelope.addContent(fileBuffer)
-		// send Request
-		buffer := sendEnvelopeRequest(envelope, NlpPostUrls[0])
-
-		saveFile(savePath, string(buffer))
-
-	} else {
-
-		if path != "file.txt" && env == "file.xml" || path == "file.txt" && env != "file.xml" {
-			fmt.Println("Please enter your envelope\n")
+}
+func nReq(container map[int]bool) int {
+	var n int
+	for _, val := range container {
+		if val {
+			n++
 		}
 	}
-
-	if connection {
-		connectionTest()
-	}
-
-	// arguments that not yet had been parsed
-	if len(os.Args[1:]) == 0 {
-		cli.ShowAppHelp(c)
-	} else {
-		}
-	}
-	*/
-
+	return n
 }
