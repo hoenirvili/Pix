@@ -119,7 +119,7 @@ func Init() {
 	//init flags
 	initFlags(App)
 
-	App.Name = "Pix (Parser Interface XML)"
+	App.Name = "pix (parser interface xml)"
 	App.Author = "Hoenir"
 	App.Usage = `The application facilits a simple command line interface for service communication on NLPTOOLS`
 	App.Version = "0.0.1"

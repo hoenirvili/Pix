@@ -1,10 +1,10 @@
-# Pix
+# pix
 
 [![Build Status](https://travis-ci.org/hoenirvili/pix.svg?branch=master)](https://travis-ci.org/hoenirvili/pix)
 
 ```
 NAME:
-   Pix (Parser Interface XML) - The application facilits a simple command line interface for service communication on NLPTOOLS
+   pix (parser interface xml) - The application facilits a simple command line interface for service communication on NLPTOOLS
 
 USAGE:
    pix [global options] command [command options] [arguments...]
