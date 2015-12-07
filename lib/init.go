@@ -30,6 +30,7 @@ var (
 		"Multilingual Clause Editor			": "http://nlptools.infoiasi.ro/UAIC.ClauseEditor/",
 		"Multilingual Discourse Parser			": "http://nlptools.infoiasi.ro/UAIC.DiscourseParser/",
 		"XML Statistics					": "http://nlptools.infoiasi.ro/UAIC.XMLStatistics/",
+		"Bermuda						": "http://dev.racai.ro:8080/BermudaTTS/nlp?WSDL",
 	}
 
 	// The tools that the app will support
@@ -42,6 +43,7 @@ var (
 		"http://nlptools.infoiasi.ro/UAIC.AnaphoraResolution/AnaphoraResolutionWS?wsdl",
 		"http://nlptools.infoiasi.ro/UAIC.ClauseSplitter/ClauseSplitterWS?wsdl",
 		"http://nlptools.infoiasi.ro/UAIC.DiscourseParser/DiscourseParserWS?wsdl",
+		"http://dev.racai.ro:8080/BermudaTTS/nlp?WSDL",
 	}
 
 	// Main colors
@@ -103,6 +105,10 @@ func initFlags(a *cli.App) {
 		cli.BoolFlag{
 			Name:  "6",
 			Usage: "interact with DiscourseParserWS",
+		},
+		cli.BoolFlag{
+			Name:  "7",
+			Usage: "interact with BermudaWS",
 		},
 	}
 }

@@ -23,8 +23,6 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	}
 
 	xml = sanitizeEnvelope(xml)
-	//	fmt.Println(string(xml))
-	//	os.Exit(0)
 
 	// make the request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(xml))

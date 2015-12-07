@@ -74,8 +74,17 @@ func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
 		env.Val2 = "http://parser.discourse.uaic/"
 		return env, err
+	case 7:
+		var env Envelope7
+		buffSliceEnv := fileContent(path)
+		err := xml.Unmarshal(buffSliceEnv, &env)
+		env.CreateBody.CreateText.Test = buffer
+		// NOTE: WHAT kind of MODEL?
+		env.CreateBody.CreateText.Model = []byte("UNKNOWN")
+		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
+		env.Val2 = "http://ws.bermuda.org/"
+		return env, err
 	}
-
 	return nil, nil
 }
 

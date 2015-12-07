@@ -29,19 +29,17 @@ func connectionTest() {
 			Timeout: time.Duration(3 * time.Second),
 		}
 
-		response, err := client.Do(request)
+		response, err1 := client.Do(request)
 
-		if err != nil {
+		if err1 != nil {
 			fmt.Fprintf(os.Stdout, "%s \t : %s :\t=====>\t %s\n", blue(key), red("SERVICE -"), val)
-			//os.Exit(0)
 		} else {
 			if response != nil && response.StatusCode == http.StatusOK {
 				fmt.Fprintf(os.Stdout, "%s \t : %s :\t=====>\t %s\n", blue(key), green("SERVICE +"), val)
 			}
 		}
-
-		// After everthing is all good just close the body
-		defer response.Body.Close()
+		if response != nil {
+			defer response.Body.Close()
+		}
 	}
-
 }

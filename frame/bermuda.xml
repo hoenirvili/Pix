@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.bermuda.org/">
+	<soapenv:Body>
+		<ws:ProcessText>
+			<model>
+			</model>
+			<text>
+			</text>
+		</ws:ProcessText>
+	</soapenv:Body>
+</soapenv:Envelope>

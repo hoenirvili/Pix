@@ -137,3 +137,22 @@ type Text6 struct {
 	TypeRow []byte `xml:"text"`
 	Lang    []byte `xml:"language"`
 }
+
+///////////////////////////////////////////////////////////
+
+// BERMUDA
+type Envelope7 struct {
+	XMLName    xml.Name `xml:"Envelope"`
+	Val1       string   `xml:"xmlns:soapenv,attr"`
+	Val2       string   `xml:"xmlns:ws,attr"`
+	CreateBody Body7    `xml:"soapenv:Body"`
+}
+
+type Body7 struct {
+	CreateText Text7 `xml:"ws:ProcessText"`
+}
+
+type Text7 struct {
+	Model []byte `xml:"model"`
+	Test  []byte `xml:"text"`
+}

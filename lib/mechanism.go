@@ -27,6 +27,7 @@ func Mechanism(c *cli.Context) {
 		4: c.Bool("4"),
 		5: c.Bool("5"),
 		6: c.Bool("6"),
+		7: c.Bool("7"),
 	}
 	argsUnparsed := c.Args()
 
