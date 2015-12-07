@@ -1,4 +1,9 @@
-build:
+install :
+	go build
+	go install
+	pix help
+
+test:
 	go build
 	go install
 	pix --path text/mecha.txt --env frame/postTaggerFrame.xml --save req0.xml -0
@@ -10,3 +15,5 @@ build:
 	pix --path text/mecha.txt --env frame/discourseParser.xml --save req6.xml -6
 clean:
 	rm -rf *.xml
+
+
