@@ -1,4 +1,6 @@
 install :
+	go get github.com/codegangsta/cli
+	go get github.com/fatih/color
 	go build
 	go install
 	pix help

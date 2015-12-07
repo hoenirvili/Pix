@@ -1,4 +1,8 @@
 language: go
+
+install:
+    make install
 go:
+    
     - 1.5
     - tip
