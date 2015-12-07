@@ -34,7 +34,7 @@ func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 		err := xml.Unmarshal(buffSliceEnv, &env)
 		env.CreateBody.CreateText.TypeRow = buffer
 		//DEFAULT RO
-		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.CreateBody.CreateText.Lang = []byte("ro")
 		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
 		env.Val2 = "http://recognizer.entity.named.uaic/"
 		return env, err
@@ -44,7 +44,7 @@ func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 		err := xml.Unmarshal(buffSliceEnv, &env)
 		env.CreateBody.CreateText.TypeRow = buffer
 		//DEFAULT RO
-		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.CreateBody.CreateText.Lang = []byte("ro")
 		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
 		env.Val2 = "http://resolution.anaphora.uaic/"
 		return env, err
@@ -54,17 +54,17 @@ func newEnvelope(key int, path string, buffer []byte) (interface{}, error) {
 		err := xml.Unmarshal(buffSliceEnv, &env)
 		env.CreateBody.CreateText.TypeRow = buffer
 		//DEFAULT RO
-		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.CreateBody.CreateText.Lang = []byte("ro")
 		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
 		env.Val2 = "http://splitter.clause.uaic/"
 		return env, err
 	case 6:
-		var env Envelope5
+		var env Envelope6
 		buffSliceEnv := fileContent(path)
 		err := xml.Unmarshal(buffSliceEnv, &env)
 		env.CreateBody.CreateText.TypeRow = buffer
 		//DEFAULT RO
-		env.CreateBody.CreateText.Lang = []byte("RO")
+		env.CreateBody.CreateText.Lang = []byte("ro")
 		env.Val1 = "http://schemas.xmlsoap.org/soap/envelope/"
 		env.Val2 = "http://parser.discourse.uaic/"
 		return env, err

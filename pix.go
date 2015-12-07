@@ -9,7 +9,7 @@ package main
 import (
 	"os"
 	// import our hand-mande library
-	"github.com/hoenirvili/Pix/lib"
+	"github.com/hoenirvili/pix/lib"
 )
 
 func main() {

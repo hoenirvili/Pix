@@ -11,11 +11,11 @@ func replaceAllEntities(buff []byte) []byte {
 		"<":  "&lt;",
 		">":  "&gt;",
 	}
-
-	for key, val := range entities {
-		buff = bytes.Replace(buff, []byte(val), []byte(key), -1)
+	for i := 0; i < 2; i++ {
+		for key, val := range entities {
+			buff = bytes.Replace(buff, []byte(val), []byte(key), -1)
+		}
 	}
-
 	return buff
 }
 

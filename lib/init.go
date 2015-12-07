@@ -60,49 +60,49 @@ func initFlags(a *cli.App) {
 		cli.StringFlag{
 			Name: "path, p",
 			//Value: "file.txt",
-			Usage: "Set file path you wish to send",
+			Usage: "set file path you wish to send",
 		},
 		cli.BoolFlag{
 			Name:  "pt, t",
-			Usage: "Test if NLPTOOLS services are online",
+			Usage: "test if NLPTOOLS services are online",
 		},
 		cli.StringFlag{
 			Name: "env, e",
 			//Value: "file.xml",
-			Usage: "Set envelope path you wish to send",
+			Usage: "set envelope path you wish to send",
 		},
 		cli.StringFlag{
 			Name: "save, s",
 			//Value: "save.xml",
-			Usage: "Save the envelope",
+			Usage: "save the envelope",
 		},
 		cli.BoolFlag{
 			Name:  "0",
-			Usage: "Interact with PosTaggerRoWS",
+			Usage: "interact with PosTaggerRoWS",
 		},
 		cli.BoolFlag{
 			Name:  "1",
-			Usage: "Interact with NpChunkerRoWS",
+			Usage: "interact with NpChunkerRoWS",
 		},
 		cli.BoolFlag{
 			Name:  "2",
-			Usage: "Interact with FdgParserRoWS",
+			Usage: "interact with FdgParserRoWS",
 		},
 		cli.BoolFlag{
 			Name:  "3",
-			Usage: "Interact with NamedEntityRecognizerWS",
+			Usage: "interact with NamedEntityRecognizerWS",
 		},
 		cli.BoolFlag{
 			Name:  "4",
-			Usage: "Interact with AnaphoraResolutionWS",
+			Usage: "interact with AnaphoraResolutionWS",
 		},
 		cli.BoolFlag{
 			Name:  "5",
-			Usage: "Interact with ClauseSplitterWS",
+			Usage: "interact with ClauseSplitterWS",
 		},
 		cli.BoolFlag{
 			Name:  "6",
-			Usage: "Interact with DiscourseParserWS",
+			Usage: "interact with DiscourseParserWS",
 		},
 	}
 }
@@ -110,7 +110,6 @@ func initFlags(a *cli.App) {
 // init the app
 func Init() {
 	App = cli.NewApp()
-
 	//init flags
 	initFlags(App)
 

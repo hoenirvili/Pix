@@ -17,6 +17,8 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	}
 
 	xml = sanitizeEnvelope(xml)
+	//	fmt.Println(string(xml))
+	//	os.Exit(0)
 
 	// make the request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(xml))
@@ -33,7 +35,7 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	// Do the request
 	response, err := client.Do(req)
 
-	if err != nil {
+	if err != nil || response.StatusCode >= http.StatusInternalServerError {
 		fmt.Fprintf(os.Stderr, "%s ===> %s\n", yellow("TIMEOUT"), green(url))
 		os.Exit(0)
 	}

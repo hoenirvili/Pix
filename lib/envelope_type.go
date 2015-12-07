@@ -61,7 +61,7 @@ type Text2 struct {
 type Envelope3 struct {
 	XMLName    xml.Name `xml:"Envelope"`
 	Val1       string   `xml:"xmlns:soapenv,attr"`
-	Val2       string   `xml:"xmlns:web,attr"`
+	Val2       string   `xml:"xmlns:rec,attr"`
 	CreateBody Body3    `xml:"soapenv:Body"`
 }
 
@@ -81,7 +81,7 @@ type Text3 struct {
 type Envelope4 struct {
 	XMLName    xml.Name `xml:"Envelope"`
 	Val1       string   `xml:"xmlns:soapenv,attr"`
-	Val2       string   `xml:"xmlns:web,attr"`
+	Val2       string   `xml:"xmlns:res,attr"`
 	CreateBody Body4    `xml:"soapenv:Body"`
 }
 
@@ -100,7 +100,7 @@ type Text4 struct {
 type Envelope5 struct {
 	XMLName    xml.Name `xml:"Envelope"`
 	Val1       string   `xml:"xmlns:soapenv,attr"`
-	Val2       string   `xml:"xmlns:web,attr"`
+	Val2       string   `xml:"xmlns:spl,attr"`
 	CreateBody Body5    `xml:"soapenv:Body"`
 }
 
@@ -119,7 +119,7 @@ type Text5 struct {
 type Envelope6 struct {
 	XMLName    xml.Name `xml:"Envelope"`
 	Val1       string   `xml:"xmlns:soapenv,attr"`
-	Val2       string   `xml:"xmlns:web,attr"`
+	Val2       string   `xml:"xmlns:par,attr"`
 	CreateBody Body6    `xml:"soapenv:Body"`
 }
 

@@ -13,15 +13,6 @@ import (
 	"github.com/codegangsta/cli"
 )
 
-/**posTagger := c.Bool("0")
-	npChunker := c.Bool("1")
-	fdgParser := c.Bool("2")
-	nameEntity := c.Bool("3")
-	anaphoraRes := c.Bool("4")
-	clauseSplitter := c.Bool("5")
-	discParser := c.Bool("6")
-**/
-
 func Mechanism(c *cli.Context) {
 	// cache all values
 	path := c.String("path")
@@ -38,14 +29,15 @@ func Mechanism(c *cli.Context) {
 		6: c.Bool("6"),
 	}
 	argsUnparsed := c.Args()
+
 	if len(os.Args[1:]) != 0 {
 		if len(argsUnparsed) == 0 {
 
 			if connection {
+				//				fmt.Println("Am intrat aici")
 				connectionTest()
 				os.Exit(0)
 			}
-
 			// all req commands parsed
 			if len(path) > 0 && len(env) > 0 && len(savePath) > 0 {
 				n := nReq(services)
@@ -59,7 +51,9 @@ func Mechanism(c *cli.Context) {
 						os.Exit(0)
 					}
 				}
+
 				core(path, env, savePath, services)
+
 			} else {
 				fmt.Fprintf(os.Stderr, "%s\n", white("In order to make the request valid, please set the corresponding path,envelope and where to save"))
 				os.Exit(0)
@@ -105,5 +99,4 @@ func core(path, envPath, savePath string, services map[int]bool) {
 			break
 		}
 	}
-
 }
