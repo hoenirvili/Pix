@@ -54,7 +54,7 @@ make
 
 ***In order to test the app you can run***
 ```
-make test
+make runtest
 ```
 This makes requests too all **NLP** *WSLD SERVICES* and the parsed result is stored in
 files **req0.xml**, **req1.xml**, **req2.xml**, **etc**. 

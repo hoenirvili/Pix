@@ -4,7 +4,7 @@ install:
 	go build
 	go install
 	pix help
-run:
+runtest:
 	pix --path text/mecha.txt --env frame/postTaggerFrame.xml --save req0.xml -0
 	pix --path text/mecha.txt --env frame/npChunkerFrame.xml --save req1.xml -1
 	pix --path text/mecha.txt --env frame/fdgParserFrame.xml --save req2.xml -2
@@ -14,7 +14,6 @@ run:
 	pix --path text/mecha.txt --env frame/discourseParser.xml --save req6.xml -6
 	pix --path text/mecha.txt --env frame/bermuda.xml --save req7.xml -7
 clean:
-	go clean
 	rm -rf *.xml
 
 
