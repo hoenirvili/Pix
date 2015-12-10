@@ -36,7 +36,8 @@ func sendEnvelopeRequest(env interface{}, url string) []byte {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(xml))
 	req.Header.Set("Content-Type", "text/xml;charset=UTF-8")
 
-	timeout := time.Duration(10 * time.Second)
+	// i think 25 sec it's enogh
+	timeout := time.Duration(25 * time.Second)
 	// Create new client that will do the request and after 10 seconds of waiting just timeout
 	client := &http.Client{
 		Timeout: timeout,
